@@ -1,13 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#0a0a0a" />
-    <title>PrivacyVault - Next-Gen Self-Custody Wallet</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { PrivyProvider } from '@privy-io/react-auth';
+import App from './App';
+import './index.css';
+
+const privyAppId = import.meta.env.VITE_PRIVY_APP_ID || 'cmipzwm2z0096ih0bgd4j462v';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <PrivyProvider
+      appId={privyAppId}
+      config={{
+        loginMethods: ['email', 'wallet'],
+        appearance: {
+          theme: 'dark',
+          accentColor: '#00ff88',
+          logo: 'https://i.imgur.com/placeholder.png',
+        },
+        embeddedWallets: {
+          createOnLogin: 'users-without-wallets',
+        },
+      }}
+    >
+      <App />
+    </PrivyProvider>
+  </React.StrictMode>
+);
